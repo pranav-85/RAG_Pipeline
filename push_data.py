@@ -12,9 +12,9 @@ embedding_model.eval()
 
 df = pd.read_csv('data.csv')
 
-url = "https://in03-505c80f9dc0263a.serverless.gcp-us-west1.cloud.zilliz.com/v2/vectordb/entities/insert"
+url = "url"
 headers = {
-  "Authorization": "Bearer 1831fe961113fd3aa8af9c99b8a7d2f3e87b34bc2ac4d0f5bc701b1b09049be2aaba097631a7c8943701cb39b7f625597eb16bae",
+  "Authorization": "Bearer <API-BEARER_TOKEN>",
   "Accept": "application/json",
   "Content-Type": "application/json"
 }
