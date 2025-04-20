@@ -46,7 +46,7 @@ def embed_text(chunks, tokenizer, model):
     # Normalize embeddings (recommended for cosine similarity)
     normalized_embeddings = F.normalize(mean_pooled, p=2, dim=1)
 
-    # print("Embedding shape:", len(normalized_embeddings), "x", len(normalized_embeddings[0]))
+    print("Embedding shape:", len(normalized_embeddings), "x", len(normalized_embeddings[0]))
 
     return normalized_embeddings.cpu().numpy().tolist()
 
@@ -60,7 +60,7 @@ def connect_to_database():
 
 def create_collection():
     id_field = FieldSchema(name="id", dtype=DataType.VARCHAR, is_primary=True, max_length=64)
-    vector_field = FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=1024)
+    vector_field = FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=768)
     text_field = FieldSchema(name="text", dtype=DataType.VARCHAR, max_length=20000)
     file_name_field = FieldSchema(name="filename", dtype=DataType.VARCHAR, max_length=256)
 

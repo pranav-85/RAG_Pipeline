@@ -6,7 +6,8 @@ from search import search_database, search_cloud_database
 from prompts import finetune_prompt, final_prompt
 from output import generate_response
 
-embedding_model_name = "BAAI/bge-large-en"
+# embedding_model_name = "BAAI/bge-large-en"
+embedding_model_name = "BAAI/llm-embedder"
 
 embedding_tokenizer = AutoTokenizer.from_pretrained(embedding_model_name)
 embedding_model = AutoModelForCausalLM.from_pretrained(embedding_model_name)
@@ -39,7 +40,8 @@ with tab1:
     if st.button("Upload File"):
         if uploaded_file:
             collection = create_collection()
-            upload_to_milvus_cloud(uploaded_file, embedding_tokenizer, embedding_model)
+            # upload_to_milvus_cloud(uploaded_file, embedding_tokenizer, embedding_model)
+            upload_to_milvus(collection, uploaded_file, embedding_tokenizer, embedding_model)
 
             st.success("File uploaded and stored in Milvus.")
             st.write("File type:", uploaded_file.type)
@@ -70,15 +72,15 @@ with tab3:
     if st.button("Ask Legal AI") and query:
         finetuned_query = finetune_prompt(query, llm_model, llm_tokenizer)
         print(f"Finetuned Query: {finetuned_query}")
-        # chunks = search_database(finetuned_query, embedding_tokenizer, embedding_model)
-        chunks = search_cloud_database(query, embedding_tokenizer, embedding_model)
+        chunks = search_database(finetuned_query, embedding_tokenizer, embedding_model)
+        # chunks = search_cloud_database(query, embedding_tokenizer, embedding_model)
         # print(chunks)
         context = ""
-        # for i, hit in enumerate(chunks[0]):
-        #     context += hit.entity.get("text") + "\n"
+        for i, hit in enumerate(chunks[0]):
+            context += hit.entity.get("text") + "\n"
 
-        for i, hit in enumerate(chunks['data']):
-            context += hit['metadata'] + "\n" + hit['text'] + "\n"
+        # for i, hit in enumerate(chunks['data']):
+        #     context += hit['metadata'] + "\n" + hit['text'] + "\n"
         # print("Context:", context)
         
         prompt = final_prompt(query, context)

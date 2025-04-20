@@ -28,7 +28,7 @@ def final_prompt(query, context):
         answer the user's question precisely and factually. Always quote relevant case numbers, parties involved,
         and final judgments whenever possible.
 
-        The output should be concise, clear and under 200-300 words.
+        Summarize the output in concise, clear manner and under 200-300 words.
 
         ### Context:
         {context}
